@@ -1,7 +1,7 @@
 import { fetchTopics, readCache } from './data.js';
 import { initTheme } from './theme.js';
 import {
-  renderList, renderSkeleton, renderState, textButton, toast, attachRipple,
+  renderList, renderSkeleton, renderState, textButton, toast,
   animate, tokenize, matches, formatDate, prefersReduced,
 } from './ui.js';
 
@@ -15,18 +15,14 @@ const FILTERS = {
   all: () => true,
   theory: (t) => !!t.theory,
   paper: (t) => !!t.paper,
-  both: (t) => !!t.theory && !!t.paper,
-  new: (t) => t.isNew,
-  soon: (t) => !t.theory || !t.paper,
 };
 const CATS = ['pure', 'applied'];
-const LABEL = { pure: 'PURE', applied: 'APPLIED' };
+const LABEL = { pure: 'Pure', applied: 'Applied' };
 
 const state = {
   topics: [],
   sig: '',
   tab: store.get('tab', 'pure') === 'applied' ? 'applied' : 'pure',
-  view: store.get('view', 'list') === 'grid' ? 'grid' : 'list',
   filter: 'all',
   query: '',
   loaded: false,
@@ -43,20 +39,14 @@ const els = {
   search: $('#search'),
   searchWrap: $('#search-wrap'),
   searchClear: $('#search-clear'),
-  filterBtn: $('#filter-btn'),
   count: $('#result-count'),
-  viewBtns: [...document.querySelectorAll('.view-btn')],
-  backdrop: $('#backdrop'),
-  filterSheet: $('#filter-sheet'),
-  actionSheet: $('#action-sheet'),
   chips: [...document.querySelectorAll('.chip')],
-  fab: $('#fab'),
   offline: $('#offline-banner'),
   install: $('#install-banner'),
   lastUpdated: $('#last-updated'),
 };
 
-const haptic = () => { try { navigator.vibrate?.(10); } catch {} };
+const haptic = () => { try { navigator.vibrate?.(8); } catch {} };
 
 /* ---------- Derived data ---------- */
 function visible(cat = state.tab) {
@@ -70,20 +60,23 @@ function render({ animate: anim = true } = {}) {
   if (!state.loaded) return;
   const tokens = tokenize(state.query);
   const items = visible();
-  const counts = Object.fromEntries(CATS.map((c) => [c, visible(c).length]));
-  CATS.forEach((c) => { $(`#count-${c}`).textContent = counts[c]; });
-
+  const inTab = state.topics.filter((t) => t.category === state.tab);
+  const withNotes = inTab.filter((t) => t.theory).length;
   const filtered = state.filter !== 'all' || tokens.length > 0;
-  els.count.textContent = `${items.length} topic${items.length === 1 ? '' : 's'}${filtered ? ' found' : ''} in ${LABEL[state.tab]}`;
+
+  els.count.textContent = filtered
+    ? `${items.length} ${items.length === 1 ? 'topic' : 'topics'} found`
+    : `${inTab.length} topics · ${withNotes} with notes`;
 
   if (!items.length) {
     const other = CATS.find((c) => c !== state.tab);
-    const extra = counts[other] ? textButton(`See ${counts[other]} in ${LABEL[other]}`, () => setTab(other)) : null;
+    const otherCount = visible(other).length;
+    const extra = otherCount ? textButton(`See ${otherCount} in ${LABEL[other]}`, () => setTab(other)) : null;
     renderState(els.list, {
       kind: 'empty',
       title: 'No topics found',
       text: tokens.length ? `Nothing matches “${state.query.trim()}” here. Try another word in Sinhala or English.` : 'No topics match this filter yet.',
-      action: 'Clear filters',
+      action: 'Clear search',
       onAction: clearAll,
       extra,
     });
@@ -94,7 +87,7 @@ function render({ animate: anim = true } = {}) {
 
 function renderFooter() {
   const newest = state.topics.reduce((m, t) => (t.updated > m ? t.updated : m), '');
-  els.lastUpdated.textContent = newest ? `Last updated ${formatDate(newest, true)}` : '';
+  els.lastUpdated.textContent = newest ? `Last updated ${formatDate(newest)}` : '';
 }
 
 /* ---------- Tabs ---------- */
@@ -110,12 +103,12 @@ async function setTab(cat, { fromSwipe = false, silent = false } = {}) {
 
   const list = els.list;
   if (!prefersReduced()) {
-    await animate(list, [{ transform: 'none', opacity: 1 }, { transform: `translateX(${-24 * dir}px)`, opacity: 0 }], { duration: fromSwipe ? 140 : 160 });
+    await animate(list, [{ transform: 'none', opacity: 1 }, { transform: `translateX(${-16 * dir}px)`, opacity: 0 }], { duration: fromSwipe ? 120 : 140 });
   }
   render({ animate: false });
-  animate(list, [{ transform: `translateX(${32 * dir}px)`, opacity: 0 }, { transform: 'none', opacity: 1 }], { duration: 300 });
+  animate(list, [{ transform: `translateX(${20 * dir}px)`, opacity: 0 }, { transform: 'none', opacity: 1 }], { duration: 260 });
   if (window.scrollY > els.panel.offsetTop) {
-    window.scrollTo({ top: Math.max(0, els.tabs.offsetTop - 80), behavior: prefersReduced() ? 'auto' : 'smooth' });
+    window.scrollTo({ top: Math.max(0, els.tabs.offsetTop - 70), behavior: prefersReduced() ? 'auto' : 'smooth' });
   }
 }
 
@@ -150,8 +143,7 @@ els.tabs.addEventListener('keydown', (e) => {
     tracking = false;
     const t = e.changedTouches[0];
     const dx = t.clientX - x0, dy = t.clientY - y0;
-    const fast = Date.now() - t0 < 600;
-    if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy) * 1.6 && fast) {
+    if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy) * 1.6 && Date.now() - t0 < 600) {
       if (dx < 0 && state.tab === 'pure') setTab('applied', { fromSwipe: true });
       else if (dx > 0 && state.tab === 'applied') setTab('pure', { fromSwipe: true });
     }
@@ -184,213 +176,37 @@ function setQuery(q) {
   softRender();
 }
 
-/** Short cross-fade re-render (search / filter). */
 let softPending = false;
 async function softRender() {
-  if (!state.loaded) return;
-  if (softPending) return;
+  if (!state.loaded || softPending) return;
   softPending = true;
-  await animate(els.list, [{ opacity: 1 }, { opacity: 0.25 }], { duration: 90 });
+  await animate(els.list, [{ opacity: 1 }, { opacity: 0.3 }], { duration: 80 });
   softPending = false;
   render({ animate: false });
-  animate(els.list, [{ opacity: 0.25, transform: 'translateY(4px)' }, { opacity: 1, transform: 'none' }], { duration: 220 });
+  animate(els.list, [{ opacity: 0.3 }, { opacity: 1 }], { duration: 200 });
 }
 
-/* ---------- Filters ---------- */
+/* ---------- Filter chips ---------- */
 function setFilter(f) {
   if (!FILTERS[f]) f = 'all';
   state.filter = f;
   els.chips.forEach((c) => c.setAttribute('aria-checked', String(c.dataset.filter === f)));
-  els.filterBtn.classList.toggle('has-filter', f !== 'all');
-  els.filterBtn.setAttribute('aria-label', f === 'all' ? 'Filter topics' : `Filter topics (active: ${els.chips.find((c) => c.dataset.filter === f).textContent.trim()})`);
   softRender();
 }
 els.chips.forEach((c) => c.addEventListener('click', () => { haptic(); setFilter(c.dataset.filter); }));
-$('#filter-reset').addEventListener('click', () => setFilter('all'));
-els.filterBtn.addEventListener('click', () => openSheet(els.filterSheet));
 
 function clearAll() {
   setFilter('all');
   setQuery('');
 }
 
-/* ---------- View toggle ---------- */
-function setView(v) {
-  state.view = v === 'grid' ? 'grid' : 'list';
-  store.set('view', state.view);
-  els.list.dataset.view = state.view;
-  els.viewBtns.forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.view === state.view)));
-}
-els.viewBtns.forEach((b) => b.addEventListener('click', () => {
-  if (b.dataset.view === state.view) return;
-  setView(b.dataset.view);
-  animate(els.list, [{ opacity: 0.4, transform: 'scale(0.99)' }, { opacity: 1, transform: 'none' }], { duration: 240 });
-}));
-
-/* ---------- Bottom sheets ---------- */
-let openSheetEl = null;
-let lastFocus = null;
-
-function openSheet(sheet) {
-  if (openSheetEl) closeSheet(true);
-  lastFocus = document.activeElement;
-  openSheetEl = sheet;
-  sheet.style.removeProperty('--drag');
-  sheet.setAttribute('aria-hidden', 'false');
-  sheet.classList.add('open');
-  els.backdrop.classList.add('open');
-  document.body.style.overflow = 'hidden';
-  const first = sheet.querySelector('[aria-checked="true"], .action-item:not(:disabled), button:not([data-close])');
-  setTimeout(() => (first || sheet).focus({ preventScroll: true }), 60);
-}
-
-function closeSheet(instant) {
-  const sheet = openSheetEl;
-  if (!sheet) return;
-  openSheetEl = null;
-  sheet.classList.remove('open', 'dragging');
-  sheet.style.removeProperty('--drag');
-  sheet.setAttribute('aria-hidden', 'true');
-  els.backdrop.classList.remove('open');
-  document.body.style.overflow = '';
-  if (!instant && lastFocus?.isConnected) lastFocus.focus({ preventScroll: true });
-}
-
-els.backdrop.addEventListener('click', () => closeSheet());
-document.querySelectorAll('[data-close]').forEach((b) => b.addEventListener('click', () => closeSheet()));
-document.addEventListener('keydown', (e) => {
-  if (!openSheetEl) return;
-  if (e.key === 'Escape') { e.preventDefault(); closeSheet(); return; }
-  if (e.key === 'Tab') {
-    const f = [...openSheetEl.querySelectorAll('button:not(:disabled)')];
-    if (!f.length) return;
-    const first = f[0], last = f[f.length - 1];
-    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
-    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
-  }
-});
-
-/* Drag to dismiss */
-[els.filterSheet, els.actionSheet].forEach((sheet) => {
-  let y0 = 0, dy = 0, t0 = 0, active = false, dragging = false, pid = null;
-  sheet.addEventListener('pointerdown', (e) => {
-    if (e.button !== 0) return;
-    active = true; dragging = false; y0 = e.clientY; dy = 0; t0 = Date.now(); pid = e.pointerId;
-  });
-  sheet.addEventListener('pointermove', (e) => {
-    if (!active || e.pointerId !== pid) return;
-    dy = e.clientY - y0;
-    if (!dragging && dy > 8) {
-      dragging = true;
-      sheet.classList.add('dragging');
-      try { sheet.setPointerCapture(pid); } catch {}
-    }
-    if (dragging) sheet.style.setProperty('--drag', `${Math.max(0, dy)}px`);
-  });
-  const end = () => {
-    if (!active) return;
-    active = false;
-    if (!dragging) return;
-    sheet.classList.remove('dragging');
-    const v = dy / Math.max(1, Date.now() - t0);
-    if (dy > sheet.offsetHeight * 0.3 || v > 0.6) closeSheet();
-    else sheet.style.setProperty('--drag', '0px');
-  };
-  sheet.addEventListener('pointerup', end);
-  sheet.addEventListener('pointercancel', end);
-});
-
-/* ---------- Card menu (⋮ / long-press / right-click) ---------- */
-let menuTopic = null;
-const appUrl = () => location.href.split('#')[0];
-
-function openMenu(id) {
-  const t = state.topics.find((x) => x.id === id);
-  if (!t) return;
-  menuTopic = t;
-  $('#action-title').textContent = t.si || t.en;
-  $('#action-title').lang = t.si ? 'si' : 'en';
-  $('#action-sub').textContent = t.si ? t.en : '';
-  const theoryBtn = els.actionSheet.querySelector('[data-act="copy-theory"]');
-  const paperBtn = els.actionSheet.querySelector('[data-act="copy-paper"]');
-  theoryBtn.disabled = !t.theory;
-  paperBtn.disabled = !t.paper;
-  theoryBtn.querySelector('small').textContent = t.theory ? '' : 'Coming soon';
-  paperBtn.querySelector('small').textContent = t.paper ? '' : 'Coming soon';
-  openSheet(els.actionSheet);
-}
-
-async function copy(text) {
-  try {
-    await navigator.clipboard.writeText(text);
-    return true;
-  } catch {
-    const ta = document.createElement('textarea');
-    ta.value = text;
-    ta.setAttribute('readonly', '');
-    ta.style.cssText = 'position:fixed;opacity:0;left:-999px';
-    document.body.append(ta);
-    ta.select();
-    let ok = false;
-    try { ok = document.execCommand('copy'); } catch {}
-    ta.remove();
-    return ok;
-  }
-}
-
-els.actionSheet.addEventListener('click', async (e) => {
-  const btn = e.target.closest('[data-act]');
-  if (!btn || btn.disabled || !menuTopic) return;
-  const t = menuTopic;
-  const act = btn.dataset.act;
-  closeSheet();
-  if (act === 'copy-theory' || act === 'copy-paper') {
-    const ok = await copy(act === 'copy-theory' ? t.theory : t.paper);
-    toast(ok ? 'Link copied' : 'Could not copy link', ok ? 'i-check' : 'i-x');
-    return;
-  }
-  const url = `${appUrl()}#topic=${encodeURIComponent(t.id)}`;
-  const lines = [`${t.si}${t.si && t.en ? ' – ' : ''}${t.en}`, 'CM Notez | Combined Mathematics'];
-  if (t.theory) lines.push(`📘 Theory Note: ${t.theory}`);
-  if (t.paper) lines.push(`📝 Past Papers: ${t.paper}`);
-  const text = lines.join('\n');
-  if (navigator.share) {
-    try { await navigator.share({ title: `CM Notez – ${t.en || t.si}`, text, url }); return; }
-    catch (err) { if (err?.name === 'AbortError') return; }
-  }
-  const ok = await copy(`${text}\n${url}`);
-  toast(ok ? 'Link copied' : 'Could not copy link', ok ? 'i-check' : 'i-x');
-});
-
+/* ---------- Row tap: if only one resource exists, the whole row opens it ---------- */
 els.list.addEventListener('click', (e) => {
-  const m = e.target.closest('[data-menu]');
-  if (m) { haptic(); openMenu(m.dataset.menu); }
+  const row = e.target.closest('.row.single');
+  if (!row || e.target.closest('a')) return;
+  const href = row.dataset.href;
+  if (href) window.open(href, '_blank', 'noopener,noreferrer');
 });
-els.list.addEventListener('contextmenu', (e) => {
-  const card = e.target.closest('.card[data-id]');
-  if (!card) return;
-  e.preventDefault();
-  openMenu(card.dataset.id);
-});
-
-/* Long-press (touch) */
-(function longPress() {
-  let timer = null, x = 0, y = 0, fired = false;
-  els.list.addEventListener('pointerdown', (e) => {
-    if (e.pointerType === 'mouse') return;
-    const card = e.target.closest('.card[data-id]');
-    if (!card || e.target.closest('[data-menu]')) return;
-    fired = false; x = e.clientX; y = e.clientY;
-    clearTimeout(timer);
-    timer = setTimeout(() => { fired = true; haptic(); openMenu(card.dataset.id); }, 520);
-  }, { passive: true });
-  const cancel = () => clearTimeout(timer);
-  els.list.addEventListener('pointermove', (e) => { if (Math.hypot(e.clientX - x, e.clientY - y) > 10) cancel(); }, { passive: true });
-  els.list.addEventListener('pointerup', cancel, { passive: true });
-  els.list.addEventListener('pointercancel', cancel, { passive: true });
-  // swallow the click that follows a long-press so a link doesn't open
-  els.list.addEventListener('click', (e) => { if (fired) { e.preventDefault(); e.stopPropagation(); fired = false; } }, true);
-})();
 
 /* ---------- Hash deep links: #pure, #applied, #search=..., #topic=id ---------- */
 let writingHash = false;
@@ -428,10 +244,10 @@ function applyHash({ initial = false } = {}) {
       syncTabs();
       render({ animate: false });
       requestAnimationFrame(() => {
-        const card = els.list.querySelector(`[data-id="${CSS.escape(t.id)}"]`);
-        if (card) {
-          card.scrollIntoView({ block: 'center', behavior: prefersReduced() ? 'auto' : 'smooth' });
-          animate(card, [{ boxShadow: '0 0 0 3px #2AABEE' }, { boxShadow: '0 0 0 0 transparent' }], { duration: 1600, delay: 300 });
+        const row = els.list.querySelector(`[data-id="${CSS.escape(t.id)}"]`);
+        if (row) {
+          row.scrollIntoView({ block: 'center', behavior: prefersReduced() ? 'auto' : 'smooth' });
+          animate(row, [{ backgroundColor: 'var(--accent-tint)' }, { backgroundColor: 'transparent' }], { duration: 1600, delay: 300 });
         }
       });
       return;
@@ -449,26 +265,16 @@ function applyHash({ initial = false } = {}) {
 }
 window.addEventListener('hashchange', () => { if (!writingHash) applyHash(); });
 
-/* ---------- Scroll: header shrink + FAB ---------- */
+/* ---------- Scroll: hairline under header ---------- */
 let ticking = false;
-function onScroll() {
+window.addEventListener('scroll', () => {
   if (ticking) return;
   ticking = true;
   requestAnimationFrame(() => {
-    const y = window.scrollY;
-    els.header.classList.toggle('is-scrolled', y > 10);
-    const show = y > 480;
-    els.fab.classList.toggle('show', show);
-    els.fab.tabIndex = show ? 0 : -1;
+    els.header.classList.toggle('is-scrolled', window.scrollY > 4);
     ticking = false;
   });
-}
-window.addEventListener('scroll', onScroll, { passive: true });
-els.fab.addEventListener('click', () => {
-  window.scrollTo({ top: 0, behavior: prefersReduced() ? 'auto' : 'smooth' });
-  els.search.focus({ preventScroll: true });
-  els.search.blur();
-});
+}, { passive: true });
 
 /* ---------- Online / offline ---------- */
 function syncOnline() { els.offline.hidden = navigator.onLine; }
@@ -529,8 +335,6 @@ async function load({ background = false } = {}) {
 
 /* ---------- Boot ---------- */
 initTheme($('#theme-toggle'), () => haptic());
-attachRipple(document.body);
-setView(state.view);
 applyHash({ initial: true });
 syncOnline();
 
@@ -539,7 +343,6 @@ if (cached?.topics?.length) setData(cached.topics, cached.sig);
 else renderSkeleton(els.list, 6);
 load();
 
-// Re-check for CSV edits when the app is brought back to the foreground
 document.addEventListener('visibilitychange', () => {
   if (document.visibilityState === 'visible' && state.loaded) load({ background: true });
 });

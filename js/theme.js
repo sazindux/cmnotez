@@ -1,5 +1,5 @@
 const KEY = 'cmn:theme';
-const META = { dark: '#17212B', light: '#FFFFFF' };
+const META = { dark: '#0F1419', light: '#FFFFFF' };
 
 export function getTheme() {
   return document.documentElement.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
@@ -10,7 +10,7 @@ function apply(theme, btn) {
   root.setAttribute('data-theme', theme);
   document.getElementById('meta-theme')?.setAttribute('content', META[theme]);
   if (btn) {
-    btn.setAttribute('aria-checked', String(theme === 'dark'));
+    btn.setAttribute('aria-label', theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme');
   }
 }
 

@@ -4,7 +4,7 @@
  * - Google Fonts: cache-first (runtime)
  * Bump VERSION when shell files change so old caches are cleared.
  */
-const VERSION = 'v1.0.0';
+const VERSION = 'v2.0.0';
 const SHELL = `cmn-shell-${VERSION}`;
 const DATA = 'cmn-data';
 const FONTS = 'cmn-fonts';

@@ -1,106 +1,61 @@
 /* ==========================================================
    CM Notez — Design tokens
-   Change colors here. Theme switch = <html data-theme="dark|light">
+   ONE accent colour: change --accent (and --accent-ink) to match the logo.
+   Theme switch = <html data-theme="dark|light">
    ========================================================== */
 :root {
-  /* Brand (Telegram) */
-  --brand: #2AABEE;
-  --brand-pressed: #229ED9;
-  /* Filled surfaces that carry white text use a deeper blue for WCAG AA (≥4.5:1) */
-  --brand-fill: #1A78B8;
-  --brand-fill-hover: #1569A6;
-  --brand-grad: linear-gradient(135deg, #1D80C1 0%, #1A78B8 50%, #1569A6 100%);
-  --brand-contrast: #ffffff;
-  --accent-lime: #C6F432;
-
-  /* Typography */
   --font-latin: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
-  --font-si: "Noto Sans Sinhala", "Iskoola Pota", "Nirmala UI", var(--font-latin);
   --font: var(--font-latin), "Noto Sans Sinhala", "Iskoola Pota", "Nirmala UI", sans-serif;
 
-  /* Shape */
   --r-sm: 10px;
   --r-md: 14px;
-  --r-lg: 18px;
+  --r-lg: 16px;
   --r-pill: 999px;
 
-  /* Motion */
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
-  --ease-sheet: cubic-bezier(0.32, 0.72, 0, 1);
-  --d-fast: 180ms;
+  --d-fast: 160ms;
   --d-med: 240ms;
-  --d-slow: 350ms;
 
-  /* Layout */
-  --shell: 480px;
-  --header-h: 64px;
+  --shell: 640px;
+  --gutter: 16px;
+  --header-h: 60px;
   --safe-t: env(safe-area-inset-top, 0px);
   --safe-b: env(safe-area-inset-bottom, 0px);
-  --safe-l: env(safe-area-inset-left, 0px);
-  --safe-r: env(safe-area-inset-right, 0px);
 }
 
-/* ---------- Dark (Telegram night) — default ---------- */
+/* ---------- Dark (default) ---------- */
 :root,
 [data-theme="dark"] {
   color-scheme: dark;
-  --bg: #0E1621;
-  --surface: #17212B;
-  --elevated: #1F2C3A;
-  --surface-2: #232F3D;
-  --text: #F5F5F5;
-  --muted: #8B98A5;
-  --border: rgba(255, 255, 255, 0.07);
-  --border-strong: rgba(255, 255, 255, 0.12);
-  --header-bg: rgba(23, 33, 43, 0.78);
-  --shadow: 0 1px 0 rgba(0, 0, 0, 0.25);
-  --shadow-lg: 0 18px 50px rgba(0, 0, 0, 0.55);
-  --tonal: rgba(42, 171, 238, 0.14);
-  --tonal-text: #6EC9F7;
-  --disabled-bg: rgba(255, 255, 255, 0.04);
-  --disabled-text: #8592A0;
-  --badge-bg: linear-gradient(135deg, rgba(55, 187, 254, 0.24), rgba(30, 150, 200, 0.12));
-  --badge-text: #7FD0FA;
-  --new-bg: #C6F432;
-  --new-text: #18230A;
-  --tick: #4FC3F7;
-  --mark-bg: rgba(42, 171, 238, 0.32);
-  --skeleton-a: #1C2733;
-  --skeleton-b: #263443;
-  --backdrop: rgba(0, 0, 0, 0.55);
-  --toast-bg: rgba(31, 44, 58, 0.97);
-  --wallpaper-opacity: 0.045;
+  --bg: #0F1419;
+  --surface: #171D24;
+  --surface-2: #1E252D;
+  --text: #EEF1F4;
+  --text-2: #9AA4AF;
+  --text-3: #6F7A86;
+  --line: rgba(255, 255, 255, 0.07);
+  --accent: #4C9AFF;
+  --accent-ink: #7DB6FF;
+  --accent-tint: rgba(76, 154, 255, 0.14);
+  --header-bg: rgba(15, 20, 25, 0.82);
+  --shadow: none;
+  --mark: rgba(76, 154, 255, 0.28);
 }
 
 /* ---------- Light ---------- */
 [data-theme="light"] {
   color-scheme: light;
-  --bg: #F1F5F9;
+  --bg: #F5F7FA;
   --surface: #FFFFFF;
-  --elevated: #FFFFFF;
-  --surface-2: #EEF2F6;
-  --text: #0F172A;
-  --muted: #5B6B80;
-  --border: rgba(15, 23, 42, 0.06);
-  --border-strong: rgba(15, 23, 42, 0.12);
-  --header-bg: rgba(255, 255, 255, 0.8);
-  --shadow: 0 1px 2px rgba(15, 23, 42, 0.05), 0 4px 14px rgba(15, 23, 42, 0.05);
-  --shadow-lg: 0 18px 50px rgba(15, 23, 42, 0.2);
-  --brand: #1A8FCF;          /* slightly deeper accent in light mode */
-  --brand-pressed: #157AB2;
-  --tonal: rgba(42, 171, 238, 0.12);
-  --tonal-text: #0E6EA3;
-  --disabled-bg: #F1F4F8;
-  --disabled-text: #5E6D7F;
-  --badge-bg: linear-gradient(135deg, rgba(42, 171, 238, 0.18), rgba(42, 171, 238, 0.06));
-  --badge-text: #0E6EA3;
-  --new-bg: #C6F432;
-  --new-text: #18230A;
-  --tick: #1A8FCF;
-  --mark-bg: rgba(42, 171, 238, 0.22);
-  --skeleton-a: #E6ECF2;
-  --skeleton-b: #F4F7FA;
-  --backdrop: rgba(15, 23, 42, 0.4);
-  --toast-bg: rgba(15, 23, 42, 0.92);
-  --wallpaper-opacity: 0.05;
+  --surface-2: #EEF1F5;
+  --text: #0F1722;
+  --text-2: #5A6573;
+  --text-3: #7A8491;
+  --line: rgba(15, 23, 34, 0.08);
+  --accent: #1F6FEB;
+  --accent-ink: #1A5FCC;
+  --accent-tint: rgba(31, 111, 235, 0.10);
+  --header-bg: rgba(255, 255, 255, 0.85);
+  --shadow: 0 1px 2px rgba(15, 23, 34, 0.04), 0 4px 14px rgba(15, 23, 34, 0.04);
+  --mark: rgba(31, 111, 235, 0.18);
 }

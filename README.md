@@ -7,18 +7,18 @@ It replaces the old Telegraph page and opens from the **“View All Notes”** b
 
 | Dark (default) | Light |
 | --- | --- |
-| ![Dark theme screenshot](docs/screenshot-dark.jpg) | ![Light theme screenshot](docs/screenshot-light.jpg) |
+| ![Dark theme screenshot](docs/screenshot-dark.png) | ![Light theme screenshot](docs/screenshot-light.png) |
 
-- Vanilla HTML + CSS + JS (ES modules). No framework, no build step. The app shell is about 28 KB gzipped.
+- Vanilla HTML + CSS + JS (ES modules). No framework, no build step. The app shell stays tiny (well under 30 KB gzipped).
 - The "database" is a single CSV file, [`data/topics.csv`](data/topics.csv), which you can edit right on GitHub.
-- PURE / APPLIED tabs (tap or swipe), instant Sinhala + English search, filters, list or grid view, and dark or light theme.
+- Minimal, list-based design: PURE / APPLIED tabs (tap or swipe), instant Sinhala + English search, simple All / Notes / Papers filter, and dark or light theme.
 - Installable PWA. It works offline and shows the last saved copy of the notes.
 
 ---
 
 ## 1. How to add or update a link (no coding needed)
 
-Every topic has two "link spaces": `theory_url` and `pastpaper_url`. If a space is empty, the site shows a grey **“Coming soon”** button.
+Every topic has two "link spaces": `theory_url` and `pastpaper_url`. If a space is empty, the site shows that button dimmed (not clickable).
 
 ### From the GitHub website or mobile app
 1. Open the repo → **`data`** folder → **`topics.csv`**.
@@ -179,3 +179,12 @@ python3 -m http.server 8080
 - Malicious CSV values (`javascript:` URLs, HTML in titles) are neutralised.
 
 Made for A/L Combined Mathematics students 🇱🇰
+
+
+---
+
+## Design notes (v2)
+
+- One accent colour only. Change `--accent` and `--accent-ink` in [`css/tokens.css`](css/tokens.css) (light and dark blocks) to match your logo.
+- The header logo loads from `https://i.ibb.co/RkH41svF/file-395.jpg` and falls back to `assets/logo.svg`. To host it yourself, save the image as `assets/logo.jpg` and change the `src` of `#logo` in `index.html`.
+- Rows with only one resource open it when you tap anywhere on the row.
