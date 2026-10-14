@@ -69,7 +69,7 @@ input[type="search"]::-webkit-search-decoration { -webkit-appearance: none; appe
 
 .skip-link {
   position: fixed; left: 12px; top: -60px; z-index: 100;
-  background: var(--brand); color: #fff; padding: 10px 14px; border-radius: var(--r-sm);
+  background: var(--brand-fill); color: #fff; padding: 10px 14px; border-radius: var(--r-sm);
 }
 .skip-link:focus { top: calc(12px + var(--safe-t)); }
 

@@ -6,7 +6,10 @@
   /* Brand (Telegram) */
   --brand: #2AABEE;
   --brand-pressed: #229ED9;
-  --brand-grad: linear-gradient(135deg, #37BBFE 0%, #2AABEE 45%, #1E96C8 100%);
+  /* Filled surfaces that carry white text use a deeper blue for WCAG AA (≥4.5:1) */
+  --brand-fill: #1A78B8;
+  --brand-fill-hover: #1569A6;
+  --brand-grad: linear-gradient(135deg, #1D80C1 0%, #1A78B8 50%, #1569A6 100%);
   --brand-contrast: #ffffff;
   --accent-lime: #C6F432;
 
@@ -55,7 +58,7 @@
   --tonal: rgba(42, 171, 238, 0.14);
   --tonal-text: #6EC9F7;
   --disabled-bg: rgba(255, 255, 255, 0.04);
-  --disabled-text: #6C7883;
+  --disabled-text: #8592A0;
   --badge-bg: linear-gradient(135deg, rgba(55, 187, 254, 0.24), rgba(30, 150, 200, 0.12));
   --badge-text: #7FD0FA;
   --new-bg: #C6F432;
@@ -83,13 +86,12 @@
   --header-bg: rgba(255, 255, 255, 0.8);
   --shadow: 0 1px 2px rgba(15, 23, 42, 0.05), 0 4px 14px rgba(15, 23, 42, 0.05);
   --shadow-lg: 0 18px 50px rgba(15, 23, 42, 0.2);
-  --brand: #1A8FCF;          /* slightly deeper in light mode for AA contrast with white text */
+  --brand: #1A8FCF;          /* slightly deeper accent in light mode */
   --brand-pressed: #157AB2;
-  --brand-grad: linear-gradient(135deg, #2AABEE 0%, #1A8FCF 55%, #157AB2 100%);
   --tonal: rgba(42, 171, 238, 0.12);
   --tonal-text: #0E6EA3;
   --disabled-bg: #F1F4F8;
-  --disabled-text: #6B7A8C;
+  --disabled-text: #5E6D7F;
   --badge-bg: linear-gradient(135deg, rgba(42, 171, 238, 0.18), rgba(42, 171, 238, 0.06));
   --badge-text: #0E6EA3;
   --new-bg: #C6F432;
