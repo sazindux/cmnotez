@@ -1,0 +1,33 @@
+id,category,order,title_si,title_en,theory_url,pastpaper_url,is_new,updated
+p01,pure,1,මාපාංක අසමානතා,Modulus Inequalities,https://t.me/cmnotez/27,https://t.me/cmnotez/29,FALSE,2026-10-09
+p02,pure,2,වර්ගජ සමීකරණ,Quadratic Equations,https://t.me/cmnotez/51,,FALSE,2026-10-09
+p03,pure,3,බහුපද ශ්‍රිත,Polynomial Functions,,,FALSE,
+p04,pure,4,දර්ශක හා ලඝුගණක,Indices and Logarithms,,,FALSE,
+p05,pure,5,ගණිත අභ්‍යුහන මූලධර්මය,Principle of Mathematical Induction,https://t.me/cmnotez/32,https://t.me/cmnotez/38,FALSE,2026-10-09
+p06,pure,6,ද්විපද ප්‍රසාරණය,Binomial Expansion,https://t.me/cmnotez/30,https://t.me/cmnotez/47,FALSE,2026-10-09
+p07,pure,7,ශ්‍රේණි ආකලනය,Summation of Series,,,FALSE,
+p08,pure,8,ත්‍රිකෝණමිතිය,Trigonometry,,,FALSE,
+p09,pure,9,සංකීර්ණ සංඛ්‍යා,Complex Numbers,,,FALSE,
+p10,pure,10,න්‍යාස,Matrix,,,FALSE,
+p11,pure,11,සරල රේඛාව සහ වෘත්තය,Straight Line and Circle,,,FALSE,
+p12,pure,12,සීමාව,Limits,,,FALSE,
+p13,pure,13,අවකලනය,Differentiation,,,FALSE,
+p14,pure,14,අනුකලනය,Integration,,,FALSE,
+a01,applied,1,දෛශික,Vectors,,,FALSE,
+a02,applied,2,චලිත ප්‍රස්තාර,Motion Graphs,https://t.me/cmnotez/43,,FALSE,2026-10-09
+a03,applied,3,සාපේක්ෂ ප්‍රවේගය,Relative Velocity,https://t.me/cmnotez/45,,FALSE,2026-10-09
+a04,applied,4,නිව්ටන් නියම,Newton's Laws,,,FALSE,
+a05,applied,5,ප්‍රක්ෂිප්ත,Projectiles,https://t.me/cmnotez/36,,FALSE,2026-10-09
+a06,applied,6,"කාර්යය, ශක්තිය සහ ජවය","Work, Energy and Power",,,FALSE,
+a07,applied,7,වෘත්ත චලිතය,Circular Motion,,,FALSE,
+a08,applied,8,සරල අනුවර්තී චලිතය,Simple Harmonic Motion (SHM),,,FALSE,
+a09,applied,9,ගම්‍යතාව හා ආවේගය,Collisions,https://t.me/cmnotez/34,,FALSE,2026-10-09
+a10,applied,10,අංශුවක් මත බල සමතුලිතතාවය,Equilibrium of a Particle,,,FALSE,
+a11,applied,11,බල ඝූර්ණය,Moments,,,FALSE,
+a12,applied,12,දෘඪ වස්තුවක් මත බල සමතුලිතතාවය,Equilibrium of Rigid Bodies,,,FALSE,
+a13,applied,13,රාමු සැකිලි,Frameworks,,,FALSE,
+a14,applied,14,සන්ධි කළ දඬු,Jointed Rods,,,FALSE,
+a15,applied,15,ස්කන්ධ කේන්ද්‍රය,Center of Gravity,,,FALSE,
+a16,applied,16,සංකරණ සහ සංයෝජන,Permutations and Combinations,,,FALSE,
+a17,applied,17,සම්භාවිතාවය,Probability,,,FALSE,
+a18,applied,18,සංඛ්‍යානය,Statistics,,,FALSE,

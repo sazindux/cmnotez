@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>CM Notez – Combined Maths Notes &amp; Past Papers | Vikum Harshana</title>
+  <meta name="description" content="All Combined Mathematics (A/L) theory notes and past papers by Vikum Harshana Sir in one place. Pure and Applied Maths topics, Sinhala medium.">
+  <meta name="theme-color" content="#0F1419" id="meta-theme">
+  <meta name="color-scheme" content="dark light">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="CM Notez">
+  <link rel="canonical" href="https://sazindux.github.io/cmnotez/">
+
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="CM Notez">
+  <meta property="og:title" content="CM Notez | VikumHarshana – All Notes">
+  <meta property="og:description" content="Combined Mathematics theory notes &amp; past papers – Pure and Applied. ශුද්ධ හා ව්‍යවහාරික ගණිතය.">
+  <meta property="og:url" content="https://sazindux.github.io/cmnotez/">
+  <meta property="og:image" content="https://sazindux.github.io/cmnotez/assets/icons/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="CM Notez | VikumHarshana – All Notes">
+  <meta name="twitter:description" content="Combined Mathematics theory notes &amp; past papers – Pure and Applied.">
+  <meta name="twitter:image" content="https://sazindux.github.io/cmnotez/assets/icons/og-image.png">
+
+  <link rel="icon" href="./assets/logo.svg" type="image/svg+xml">
+  <link rel="icon" href="./assets/icons/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="./assets/icons/apple-touch-icon.png">
+  <link rel="manifest" href="./manifest.webmanifest">
+
+  <!-- Telegram Mini App SDK (must load before the app; harmless in a normal browser) -->
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+
+  <script>
+    (function () {
+      try {
+        var tg = window.Telegram && window.Telegram.WebApp;
+        var inTg = !!(tg && tg.platform && tg.platform !== 'unknown');
+        var root = document.documentElement;
+        if (inTg) root.classList.add('tg');
+        var t = localStorage.getItem('cmn:theme');
+        if (t !== 'light' && t !== 'dark') {
+          t = inTg && (tg.colorScheme === 'light' || tg.colorScheme === 'dark')
+            ? tg.colorScheme
+            : (matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+        }
+        root.setAttribute('data-theme', t);
+        document.getElementById('meta-theme').setAttribute('content', t === 'light' ? '#FFFFFF' : '#0F1419');
+      } catch (e) {}
+    })();
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Noto+Sans+Sinhala:wght@400;500;600&display=swap" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Noto+Sans+Sinhala:wght@400;500;600&display=swap"></noscript>
+
+  <link rel="stylesheet" href="./css/tokens.css">
+  <link rel="stylesheet" href="./css/base.css">
+  <link rel="stylesheet" href="./css/components.css">
+  <script type="module" src="./js/app.js"></script>
+</head>
+<body>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <defs>
+      <symbol id="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M4.6 4.6l1.4 1.4M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4L6 18M18 6l1.4-1.4"/></symbol>
+      <symbol id="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4 8.5 8.5 0 1 0 20 14.5Z"/></symbol>
+      <symbol id="i-tg" viewBox="0 0 24 24" fill="currentColor"><path d="M21.4 4.2 2.9 11.3c-1.3.5-1.2 1.2-.2 1.5l4.7 1.5 1.8 5.6c.2.6.4.8.9.8.4 0 .6-.2.9-.5l2.3-2.2 4.8 3.5c.9.5 1.5.2 1.7-.8l3.1-14.7c.3-1.3-.5-1.9-1.5-1.8ZM9.6 14.2l8.9-5.6c.4-.3.8-.1.5.2l-7.6 6.9-.3 3.2-1.5-4.7Z"/></symbol>
+      <symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/></symbol>
+      <symbol id="i-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></symbol>
+      <symbol id="i-book" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5v-15Z"/><path d="M4 20.5A2.5 2.5 0 0 0 6.5 23H20v-5"/></symbol>
+      <symbol id="i-paper" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8l-5-5Z"/><path d="M14 3v5h5"/></symbol>
+      <symbol id="i-wifi-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M3 3l18 18M8.5 16.5a5 5 0 0 1 7 0M5 12.8a10 10 0 0 1 4.2-2.4M19 12.8a10 10 0 0 0-2.7-1.9M2 9.2a15 15 0 0 1 4.3-2.6M22 9.2A15 15 0 0 0 11 5.1"/></symbol>
+      <symbol id="i-download" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5V15M7.5 10.5 12 15l4.5-4.5M5 19.5h14"/></symbol>
+      <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></symbol>
+    </defs>
+  </svg>
+
+  <a class="skip-link" href="#main">Skip to topics</a>
+
+  <header class="app-header" id="header">
+    <div class="shell header-row">
+      <a class="brand" href="https://t.me/cmnotez" target="_blank" rel="noopener noreferrer">
+        <img class="avatar" id="logo" src="https://i.ibb.co/RkH41svF/file-395.jpg" width="36" height="36" alt="" onerror="this.onerror=null;this.src='./assets/logo.svg'">
+        <div class="brand-text">
+          <h1 class="brand-title">CM Notez</h1>
+          <p class="brand-sub">Combined Mathematics · Vikum Harshana Sir</p>
+        </div>
+      </a>
+      <div class="header-actions">
+        <button class="icon-btn" id="theme-toggle" type="button" aria-label="Switch to light theme" title="Toggle theme">
+          <svg class="ico-sun" aria-hidden="true"><use href="#i-sun"/></svg>
+          <svg class="ico-moon" aria-hidden="true"><use href="#i-moon"/></svg>
+        </button>
+        <a class="icon-btn" href="https://t.me/cmnotez" target="_blank" rel="noopener noreferrer" aria-label="Open the CM Notez Telegram channel" title="Telegram channel">
+          <svg aria-hidden="true"><use href="#i-tg"/></svg>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main id="main" class="shell">
+    <section class="controls" aria-label="Browse topics">
+      <div class="tabs" role="tablist" aria-label="Category" data-active="pure" id="tabs">
+        <span class="tab-thumb" aria-hidden="true"></span>
+        <button class="tab" role="tab" id="tab-pure" data-cat="pure" aria-selected="true" aria-controls="panel" type="button">Pure</button>
+        <button class="tab" role="tab" id="tab-applied" data-cat="applied" aria-selected="false" aria-controls="panel" tabindex="-1" type="button">Applied</button>
+      </div>
+
+      <div class="search" id="search-wrap" role="search">
+        <svg class="search-icon" aria-hidden="true"><use href="#i-search"/></svg>
+        <label for="search" class="sr-only">Search topics in Sinhala or English</label>
+        <input id="search" type="search" placeholder="Search topics" autocomplete="off" autocorrect="off" spellcheck="false" enterkeyhint="search">
+        <button class="search-clear" id="search-clear" type="button" aria-label="Clear search" tabindex="-1">
+          <svg aria-hidden="true"><use href="#i-x"/></svg>
+        </button>
+      </div>
+
+      <div class="chips" role="radiogroup" aria-label="Show" id="chips">
+        <button class="chip" type="button" role="radio" data-filter="all" aria-checked="true">All</button>
+        <button class="chip" type="button" role="radio" data-filter="theory" aria-checked="false">Notes</button>
+        <button class="chip" type="button" role="radio" data-filter="paper" aria-checked="false">Papers</button>
+      </div>
+
+      <div class="banner" id="offline-banner" role="status" hidden>
+        <svg aria-hidden="true"><use href="#i-wifi-off"/></svg>
+        <span class="banner-text">Offline · showing saved notes</span>
+      </div>
+      <div class="banner" id="install-banner" hidden>
+        <svg aria-hidden="true"><use href="#i-download"/></svg>
+        <span class="banner-text">Install CM Notez for quick access</span>
+        <button class="btn-mini" id="install-btn" type="button">Install</button>
+        <button class="icon-btn sm" id="install-close" type="button" aria-label="Dismiss"><svg aria-hidden="true"><use href="#i-x"/></svg></button>
+      </div>
+
+      <p class="result-count" id="result-count" aria-live="polite">Loading…</p>
+    </section>
+
+    <section class="panel" id="panel" role="tabpanel" aria-labelledby="tab-pure">
+      <ul class="list" id="list" aria-busy="true">
+        <li class="row skeleton" aria-hidden="true"><span class="sk sk-num"></span><div class="titles"><div class="sk sk-line w70"></div><div class="sk sk-line w45"></div></div><span class="sk sk-pill"></span></li>
+        <li class="row skeleton" aria-hidden="true"><span class="sk sk-num"></span><div class="titles"><div class="sk sk-line w70"></div><div class="sk sk-line w45"></div></div><span class="sk sk-pill"></span></li>
+        <li class="row skeleton" aria-hidden="true"><span class="sk sk-num"></span><div class="titles"><div class="sk sk-line w70"></div><div class="sk sk-line w45"></div></div><span class="sk sk-pill"></span></li>
+        <li class="row skeleton" aria-hidden="true"><span class="sk sk-num"></span><div class="titles"><div class="sk sk-line w70"></div><div class="sk sk-line w45"></div></div><span class="sk sk-pill"></span></li>
+        <li class="row skeleton" aria-hidden="true"><span class="sk sk-num"></span><div class="titles"><div class="sk sk-line w70"></div><div class="sk sk-line w45"></div></div><span class="sk sk-pill"></span></li>
+        <li class="row skeleton" aria-hidden="true"><span class="sk sk-num"></span><div class="titles"><div class="sk sk-line w70"></div><div class="sk sk-line w45"></div></div><span class="sk sk-pill"></span></li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="app-footer shell">
+    <p>A/L Combined Mathematics · Vikum Harshana Sir</p>
+    <p><a href="https://t.me/cmnotez" target="_blank" rel="noopener noreferrer">Join the Telegram channel</a></p>
+    <p id="last-updated"></p>
+  </footer>
+
+  <div class="toast-wrap" id="toasts" role="status" aria-live="polite"></div>
+</body>
+</html>

@@ -1,0 +1,61 @@
+/* ==========================================================
+   CM Notez — Design tokens
+   ONE accent colour: change --accent (and --accent-ink) to match the logo.
+   Theme switch = <html data-theme="dark|light">
+   ========================================================== */
+:root {
+  --font-latin: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  --font: var(--font-latin), "Noto Sans Sinhala", "Iskoola Pota", "Nirmala UI", sans-serif;
+
+  --r-sm: 10px;
+  --r-md: 14px;
+  --r-lg: 16px;
+  --r-pill: 999px;
+
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --d-fast: 160ms;
+  --d-med: 240ms;
+
+  --shell: 640px;
+  --gutter: 16px;
+  --header-h: 60px;
+  --safe-t: calc(env(safe-area-inset-top, 0px) + var(--tg-safe-area-inset-top, 0px) + var(--tg-content-safe-area-inset-top, 0px));
+  --safe-b: env(safe-area-inset-bottom, 0px);
+}
+
+/* ---------- Dark (default) ---------- */
+:root,
+[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #0F1419;
+  --surface: #171D24;
+  --surface-2: #1E252D;
+  --text: #EEF1F4;
+  --text-2: #9AA4AF;
+  --text-3: #6F7A86;
+  --line: rgba(255, 255, 255, 0.07);
+  --accent: #4C9AFF;
+  --accent-ink: #7DB6FF;
+  --accent-tint: rgba(76, 154, 255, 0.14);
+  --header-bg: rgba(15, 20, 25, 0.82);
+  --shadow: none;
+  --mark: rgba(76, 154, 255, 0.28);
+}
+
+/* ---------- Light ---------- */
+[data-theme="light"] {
+  color-scheme: light;
+  --bg: #F5F7FA;
+  --surface: #FFFFFF;
+  --surface-2: #EEF1F5;
+  --text: #0F1722;
+  --text-2: #5A6573;
+  --text-3: #7A8491;
+  --line: rgba(15, 23, 34, 0.08);
+  --accent: #1F6FEB;
+  --accent-ink: #1A5FCC;
+  --accent-tint: rgba(31, 111, 235, 0.10);
+  --header-bg: rgba(255, 255, 255, 0.85);
+  --shadow: 0 1px 2px rgba(15, 23, 34, 0.04), 0 4px 14px rgba(15, 23, 34, 0.04);
+  --mark: rgba(31, 111, 235, 0.18);
+}
