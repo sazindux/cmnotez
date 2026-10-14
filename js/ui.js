@@ -110,7 +110,6 @@ function actionButton(kind, url, title) {
       class: 'btn btn-soon',
       type: 'button',
       disabled: true,
-      'aria-label': `${label} – coming soon`,
       title: `${label} coming soon`,
     }, icon('i-clock'), h('span', { class: 'btn-label' }, h('span', { text: 'Coming soon' }), h('small', { text: label })));
   }
@@ -141,8 +140,8 @@ export function renderCard(t, tokens) {
   }
 
   const titles = h('div', { class: 'titles' });
-  if (t.si) titles.append(highlight(h('h3', { class: 't-si', lang: 'si' }), t.si, tokens));
-  if (t.en) titles.append(highlight(h(t.si ? 'p' : 'h3', { class: 't-en' }), t.en, tokens));
+  if (t.si) titles.append(highlight(h('h2', { class: 't-si', lang: 'si' }), t.si, tokens));
+  if (t.en) titles.append(highlight(h(t.si ? 'p' : 'h2', { class: 't-en' }), t.en, tokens));
 
   const menu = h('button', {
     class: 'icon-btn menu-btn',
@@ -216,9 +215,8 @@ export function renderList(list, topics, tokens, { animate = true } = {}) {
   list.setAttribute('aria-busy', 'false');
   if (doAnimate) {
     const obs = observer();
-    // force style flush so the initial state is committed before observing
-    void list.offsetHeight;
-    cards.forEach((c) => obs.observe(c));
+    // observe on the next frame so the hidden initial state is painted first (no forced reflow)
+    requestAnimationFrame(() => cards.forEach((c) => obs.observe(c)));
   }
 }
 

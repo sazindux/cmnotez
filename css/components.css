@@ -334,7 +334,7 @@ body::after {
 .banner.offline { background: var(--tonal); border-color: transparent; color: var(--tonal-text); }
 
 /* ---------- Topic list ---------- */
-.panel { position: relative; min-height: 50vh; touch-action: pan-y; }
+.panel { position: relative; min-height: 100vh; min-height: 100dvh; touch-action: pan-y; }
 .list {
   list-style: none;
   display: grid;
@@ -371,6 +371,9 @@ body::after {
   border: 1px solid var(--border);
   box-shadow: var(--shadow);
   -webkit-touch-callout: none;
+  /* skip layout/paint work for off-screen cards */
+  content-visibility: auto;
+  contain-intrinsic-size: auto 190px;
 }
 .card.reveal { opacity: 0; transform: translateY(12px); }
 .card.reveal.in {
