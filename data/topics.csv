@@ -1,7 +1,7 @@
 id,category,order,title_si,title_en,theory_url,pastpaper_url,is_new,updated
 p01,pure,1,මාපාංක අසමානතා,Modulus Inequalities,https://t.me/cmnotez/27,https://t.me/cmnotez/29,FALSE,2026-10-09
-p02,pure,2,වර්ගජ සමීකරණ,Quadratic Equations,https://t.me/cmnotez/61,,TRUE,2026-10-15
-p03,pure,3,බහුපද ශ්‍රිත,Polynomial Functions,,,FALSE,
+p02,pure,2,වර්ගජ සමීකරණ,Quadratic Equations,https://t.me/cmnotez/61,,FALSE,2026-10-15
+p03,pure,3,බහුපද ශ්‍රිත,Polynomial Functions,https://t.me/cmnotez/63,,TRUE,2026-10-16
 p04,pure,4,දර්ශක හා ලඝුගණක,Indices and Logarithms,,,FALSE,
 p05,pure,5,ගණිත අභ්‍යුහන මූලධර්මය,Principle of Mathematical Induction,https://t.me/cmnotez/32,https://t.me/cmnotez/38,FALSE,2026-10-09
 p06,pure,6,ද්විපද ප්‍රසාරණය,Binomial Expansion,https://t.me/cmnotez/30,https://t.me/cmnotez/47,FALSE,2026-10-09
